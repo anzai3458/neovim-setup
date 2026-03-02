@@ -15,7 +15,7 @@ Personal Neovim configuration based on [LazyVim](https://www.lazyvim.org), set u
 **Prerequisites:** macOS with [Homebrew](https://brew.sh) installed.
 
 ```bash
-git clone <your-github-repo-url> ~/dev/neovim-setup
+git clone https://github.com/anzai3458/neovim-setup ~/dev/neovim-setup
 cd ~/dev/neovim-setup
 chmod +x install.sh
 ./install.sh
