@@ -39,6 +39,23 @@ Set your terminal font to **JetBrainsMono Nerd Font** for icons to render correc
 | `<Space>ca` | Code actions |
 | `<Space>l` | Mason (manage LSP servers) |
 
+## Uninstall
+
+To remove Neovim and all related configuration from a machine:
+
+```bash
+chmod +x uninstall.sh
+./uninstall.sh
+```
+
+This removes:
+- The `~/.config/nvim` symlink
+- Neovim plugin data, state, and cache (`~/.local/share/nvim`, `~/.local/state/nvim`, `~/.cache/nvim`)
+- Neovim itself (via Homebrew)
+- Optionally: lazygit, JetBrainsMono Nerd Font (prompted)
+
+Not removed automatically: `ripgrep`, `fd` (commonly used by other tools), and the Rust toolchain. To remove Rust: `rustup self uninstall`.
+
 ## Customization
 
 - Add plugins: `lua/plugins/`
