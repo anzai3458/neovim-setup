@@ -28,6 +28,28 @@ fi
 ln -sfn "$REPO_DIR" "$NVIM_CONFIG"
 echo "  Linked $NVIM_CONFIG -> $REPO_DIR"
 
+echo "==> Linking tmux config..."
+TMUX_CONF="$HOME/.tmux.conf"
+if [ -e "$TMUX_CONF" ] && [ ! -L "$TMUX_CONF" ]; then
+  echo "  Backing up existing config to $TMUX_CONF.bak"
+  mv "$TMUX_CONF" "$TMUX_CONF.bak"
+fi
+ln -sfn "$REPO_DIR/tmux.conf" "$TMUX_CONF"
+echo "  Linked $TMUX_CONF -> $REPO_DIR/tmux.conf"
+
+# Source tmux config if tmux is installed
+if command -v tmux &>/dev/null; then
+  echo "==> Sourcing tmux config..."
+  tmux source "$TMUX_CONF" 2>/dev/null && echo "  tmux config sourced successfully." || echo "  Could not source tmux config (tmux may not be running)."
+else
+  echo "==> Installing tmux..."
+  brew install tmux 2>/dev/null || true
+  if command -v tmux &>/dev/null; then
+    echo "==> Sourcing tmux config..."
+    tmux source "$TMUX_CONF" 2>/dev/null && echo "  tmux config sourced successfully." || echo "  Could not source tmux config (tmux may not be running)."
+  fi
+fi
+
 echo ""
 echo "Done! Open nvim to complete plugin installation."
 echo "Remember to set your terminal font to 'JetBrainsMono Nerd Font'."

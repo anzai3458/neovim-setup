@@ -37,6 +37,22 @@ if [[ "$reply" =~ ^[Yy]$ ]]; then
   brew uninstall --cask font-jetbrains-mono-nerd-font 2>/dev/null || echo "  Font not installed, skipping"
 fi
 
+echo "==> Removing tmux config symlink..."
+TMUX_CONF="$HOME/.tmux.conf"
+if [ -L "$TMUX_CONF" ]; then
+  rm "$TMUX_CONF"
+  echo "  Removed $TMUX_CONF"
+  # Restore backup if it exists
+  if [ -e "$TMUX_CONF.bak" ]; then
+    mv "$TMUX_CONF.bak" "$TMUX_CONF"
+    echo "  Restored backup to $TMUX_CONF"
+  fi
+elif [ -e "$TMUX_CONF" ]; then
+  echo "  $TMUX_CONF is not a symlink — skipping (remove manually if needed)"
+else
+  echo "  $TMUX_CONF not found, skipping"
+fi
+
 echo ""
 echo "Done. ripgrep and fd were kept (commonly used by other tools)."
 echo "Rust/rustup was kept — remove manually with 'rustup self uninstall' if needed."
